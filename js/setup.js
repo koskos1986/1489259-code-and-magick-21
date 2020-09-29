@@ -9,29 +9,29 @@ const MAGE_QUANTITY = `4`;
 const getRandomMageFeatures = (array) => array[Math.floor(Math.random() * array.length)];
 
 let getMage = (number) => {
-  let data = [];
+  let mageArray = [];
   for (var i = 0; i < number; i++) {
-    data [i] = {
+    mageArray.push({
       name: getRandomMageFeatures(MAGE_NAME) + ' ' + getRandomMageFeatures(MAGE_SURNAME),
       coatColor: getRandomMageFeatures(COAT_COLORS),
       eyeColor: getRandomMageFeatures(EYES_COLORS)
-    };
+    });
   }
-  return data;
+  return mageArray;
 };
 
-let renderMage = (obj) => {
+let renderMage = (mage) => {
   let template = document.querySelector('#similar-wizard-template').content.querySelector('.setup-similar-item');
-  let mage = template.cloneNode(true);
-  mage.querySelector(`.setup-similar-label`).textContent = obj.name;
-  mage.querySelector(`.wizard-coat`).style.fill = obj.coatColor;
-  mage.querySelector(`.wizard-eyes`).style.fill = obj.eyeColor;
-  return mage;
+  let mageItem = template.cloneNode(true);
+  mageItem.querySelector(`.setup-similar-label`).textContent = mage.name;
+  mageItem.querySelector(`.wizard-coat`).style.fill = mage.coatColor;
+  mageItem.querySelector(`.wizard-eyes`).style.fill = mage.eyeColor;
+  return mageItem;
 };
 
-let buildFragment = (array) => {
+let buildFragment = (mageArray) => {
   let fragment = document.createDocumentFragment();
-  array.forEach((item) => {
+  mageArray.forEach((item) => {
     fragment.appendChild(renderMage(item));
   });
   return fragment;
