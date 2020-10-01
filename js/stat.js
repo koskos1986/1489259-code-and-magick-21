@@ -4,7 +4,6 @@ const CLOUD_WIDTH = 420;
 const CLOUD_HEIGHT = 270;
 const CLOUD_X = 100;
 const CLOUD_Y = 10;
-const FONT = `16px PT Mono`;
 const GAP = 10; // Отступ для фона
 const TABLET_GAP = 20; // отступ для данных таблицы
 const COLUMN_GAP = 50; // отступ между столбцами
@@ -22,25 +21,29 @@ let getBarColor = function () {
   return `hsl(240, ` + Math.floor(Math.random() * Math.floor(100)) + `%, 30%)`;
 };
 
-let getMaxElement = function (arr) {
-  let maxElement = arr[0];
-  for (let i = 1; i < arr.length; i++) {
-    if (arr[i] > maxElement) {
-      maxElement = arr[i];
+let getMaxElement = function (array) {
+  let maxElement = array[0];
+  for (let i = 1; i < array.length; i++) {
+    if (array[i] > maxElement) {
+      maxElement = array[i];
     }
   }
   return maxElement;
 };
 
+let renderHeader = function (ctx, FONT, baseline, color, firstText, secondText) {
+  ctx.fillStyle = color;
+  ctx.font = FONT;
+  ctx.textBaseline = baseline;
+  ctx.fillText(firstText, CLOUD_X + TABLET_GAP, CLOUD_Y + TABLET_GAP);
+  ctx.fillText(secondText, CLOUD_X + TABLET_GAP, CLOUD_Y + TABLET_GAP + FONT_GAP);
+};
+
 window.renderStatistics = function (ctx, names, times) {
   renderCloud(ctx, CLOUD_X + GAP, CLOUD_Y + GAP, `rgba(0, 0, 0, 0.7)`);
   renderCloud(ctx, CLOUD_X, CLOUD_Y, `#fff`);
+  renderHeader(ctx, `16px PT Mono`, `hanging`, `#000`, `Ура Вы победили!`, `Список результатов:`);
 
-  ctx.fillStyle = `#000`;
-  ctx.font = FONT;
-  ctx.textBaseline = `hanging`;
-  ctx.fillText(`Ура Вы победили!`, CLOUD_X + TABLET_GAP, CLOUD_Y + TABLET_GAP);
-  ctx.fillText(`Cписок результатов:`, CLOUD_X + TABLET_GAP, CLOUD_Y + TABLET_GAP + FONT_GAP);
 
   let maxTime = getMaxElement(times);
   for (let i = 0; i < names.length; i++) {
